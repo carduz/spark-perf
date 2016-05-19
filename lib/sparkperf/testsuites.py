@@ -127,8 +127,8 @@ class JVMPerfTestSuite(PerfTestSuite):
     def get_spark_submit_cmd(cls, cluster, config, main_class_or_script, opt_list, stdout_filename,
                              stderr_filename):
         spark_submit = "%s/bin/spark-submit" % cluster.spark_home
-        cmd = "%s --num-executors 4 --driver-memory 512m --executor-memory 512m --executor-cores 2 --class %s --master %s --driver-memory %s %s %s 1>> %s 2>> %s" % (
-            spark_submit, main_class_or_script, config.SPARK_CLUSTER_URL,
+        cmd = "%s %s --class %s --master %s --driver-memory %s %s %s 1>> %s 2>> %s" % (
+            spark_submit, config.ADDITIONAL_DATA, main_class_or_script, config.SPARK_CLUSTER_URL,
             config.SPARK_DRIVER_MEMORY, cls.test_jar_path, " ".join(opt_list),
             stdout_filename, stderr_filename)
         return cmd
@@ -266,8 +266,8 @@ class PythonMLlibTests(PerfTestSuite, MLlibTestHelper):
     def get_spark_submit_cmd(cls, cluster, config, main_class_or_script, opt_list, stdout_filename,
                              stderr_filename):
         spark_submit = "%s/bin/spark-submit" % cluster.spark_home
-        cmd = "%s --num-executors 4 --driver-memory 512m --executor-memory 512m --executor-cores 2 --master %s pyspark-tests/%s %s 1>> %s 2>> %s" % (
-            spark_submit, config.SPARK_CLUSTER_URL,
+        cmd = "%s %s --master %s pyspark-tests/%s %s 1>> %s 2>> %s" % (
+            spark_submit, config.ADDITIONAL_DATA, config.SPARK_CLUSTER_URL,
             main_class_or_script, " ".join(opt_list),
             stdout_filename, stderr_filename)
         return cmd
@@ -284,8 +284,8 @@ class PythonTests(PerfTestSuite):
     def get_spark_submit_cmd(cls, cluster, config, main_class_or_script, opt_list, stdout_filename,
                              stderr_filename):
         spark_submit = "%s/bin/spark-submit" % cluster.spark_home
-        cmd = "%s --num-executors 4 --driver-memory 512m --executor-memory 512m --executor-cores 2 --master %s pyspark-tests/%s %s 1>> %s 2>> %s" % (
-            spark_submit, config.SPARK_CLUSTER_URL, main_class_or_script, " ".join(opt_list),
+        cmd = "%s %s --master %s pyspark-tests/%s %s 1>> %s 2>> %s" % (
+            spark_submit, config.ADDITIONAL_DATA, config.SPARK_CLUSTER_URL, main_class_or_script, " ".join(opt_list),
             stdout_filename, stderr_filename)
         return cmd
 
